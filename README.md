@@ -58,6 +58,20 @@ DRY_RUN=1 bash scripts/ETTh1.sh
 `PYTHON` selects the Python executable. Use `python run.py --help` for CLI options;
 CLI defaults do not automatically load a dataset script's parameters.
 
+Common parameters default in `run.py`: `d_model=256`, `d_ff=1024`, `n_heads=4`,
+`e_layers=2`, `batch_size=32`, `num_workers=10`, and `seed=2021`, along with shared
+CSCA/ACR/CRH settings. Each script defines its dataset settings once in
+`common_args` and keeps only horizon-specific overrides in `horizon_args`.
+`crh_mix_final` defaults to `crh_mix`; it is specified separately when annealing
+uses a different final value. The scripts retain their original effective
+parameters for all 28 dataset/horizon combinations.
+
+Inspect CLI defaults without reading data or training:
+
+```bash
+python run.py --dry_run
+```
+
 Each run saves `config.json` and `metrics.json` under `results/`. Metrics are
 MSE/MAE in training-standardized units. The best checkpoint is selected by
 validation MSE and removed after testing. Set `SAVE_CHECKPOINT=1` to retain it.
